@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="ru" data-theme="cyber" data-layout="focus">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#0a0d14">
+  <meta name="description" content="Демонстрационный планировщик маршрута до Катуара">
+  <title>Catch-It — маршрут домой</title><link rel="manifest" href="manifest.json"><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230a0d14'/%3E%3Cpath d='M14 36h24l-8-8m8 8-8 8' fill='none' stroke='%2300f59b' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/base.css"><link rel="stylesheet" href="css/themes.css"><link rel="stylesheet" href="css/layouts.css">
+  <script defer src="js/config_fallback.js"></script><script defer src="js/store.js"></script><script defer src="js/theme_switcher.js"></script><script defer src="js/renderer.js"></script><script defer src="js/controls.js"></script><script defer src="js/app.js"></script>
+</head>
+<body>
+  <header class="topbar"><div class="topbar-inner"><a class="brand" href="index.html" aria-label="Catch It — главная"><span class="brand-mark">↗</span><span>catch<span class="brand-accent">it</span><span class="brand-dot">.</span></span></a><span class="top-divider"></span><span class="top-caption">ТВОЙ МАРШРУТ ДОМОЙ</span><div class="top-actions"><span class="demo-indicator"><i></i> DEMO DATA</span><button class="icon-btn" id="theme-button" aria-label="Сменить тему" title="Сменить тему">◐</button><button class="icon-btn chaos-trigger" data-action="chaos" aria-label="Открыть QA симулятор" title="QA симулятор">⚗</button></div></div></header>
+  <main class="shell"><div class="page-intro"><div><div class="eyebrow"><span class="live-dot"></span> ТВОЙ ЛИЧНЫЙ НАВИГАТОР <span class="eyebrow-sep">/</span> МОСКВА</div><h1>Поехали <span>домой.</span></h1><p>Меньше ожидания. Больше времени для себя.</p></div><div class="intro-side"><span>МАРШРУТ НА СЕГОДНЯ</span><strong>Вешних Вод <b>→</b> Катуар</strong></div></div>
+    <div class="direction-tabs" role="group" aria-label="Направление"><button data-direction="to_home" class="active"><span>↘</span> Домой</button><button data-direction="from_home"><span>↗</span> Из дома</button><div class="direction-note">ОДИН МАРШРУТ <span>·</span> МНОГО ВАРИАНТОВ</div></div>
+    <div class="dashboard"><div class="primary"><div id="verdict"></div><div class="section-heading"><div><div class="eyebrow muted">ДЕТАЛИ ПОЕЗДКИ <span class="eyebrow-sep">/</span> 01</div><h2>Твой маршрут <span class="route-count">10 этапов</span></h2></div><div class="layout-switch" role="group" aria-label="Вид маршрута"><button data-layout-choice="focus" title="Фокус" aria-label="Фокус">☰</button><button data-layout-choice="dual" title="Сравнение" aria-label="Сравнение">▥</button><button data-layout-choice="gantt" title="Шкала" aria-label="Шкала">▤</button></div></div><div id="route"></div></div><aside class="sidebar"><div id="controls"></div><div class="side-foot"><span class="side-foot-icon">✳</span><div><strong>Планы меняются?</strong><p>Настрой параметры и маршрут пересчитается мгновенно.</p></div></div></aside></div>
+    <footer class="page-footer"><span>СДЕЛАНО ДЛЯ ПУТИ ДОМОЙ <span class="brand-accent">↗</span></span><span>РАСПИСАНИЕ ДЕМОНСТРАЦИОННОЕ · НЕ ДЛЯ НАВИГАЦИИ</span></footer>
+  </main>
+  <div id="mobile-controls"></div><div id="drawer"></div>
+</body></html>

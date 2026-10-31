@@ -1,0 +1,22 @@
+{
+  "walkToBusSec": 120,
+  "busRideSec": 420,
+  "busHeadwaySec": 600,
+  "s3": {
+    "calm": 240,
+    "fast": 120
+  },
+  "mckRideSec": 360,
+  "mckHeadwaySec": 240,
+  "s6": {
+    "calm": 540,
+    "fast": 210
+  },
+  "trainRideSec": 2580,
+  "walkHomeSec": 360,
+  "boardingBuffer": {
+    "calm": 60,
+    "fast": 15
+  },
+  "scheduleUpdatedAt": "04:30"
+}
