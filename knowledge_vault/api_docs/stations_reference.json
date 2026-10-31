@@ -1,0 +1,10 @@
+{
+  "note": "Коды Яндекс Расписаний по публичным страницам станций; перед интеграцией проверить через актуальный справочник API.",
+  "stations": [
+    {"name":"Окружная (Савёловское направление)","code":"s9601830","source":"https://rasp.yandex.ru/station/9601830/"},
+    {"name":"Окружная (МЦК)","code":"s9855182","source":"https://rasp.yandex.ru/station/9855182/"},
+    {"name":"Катуар","code":"s9601271","source":"https://rasp.yandex.ru/station/9601271/"},
+    {"name":"Ботанический сад (МЦК)","code":"s9855184","source":"https://rasp.yandex.ru/station/9855184/"},
+    {"name":"Лобня","code":"s9600781","source":"https://rasp.yandex.ru/station/9600781/"}
+  ]
+}

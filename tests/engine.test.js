@@ -1,0 +1,51 @@
+'use strict';
+const assert = require('assert');
+global.window = global;
+global.location = {protocol: 'file:'};
+global.localStorage = {getItem: () => null};
+require('../web/js/config_fallback.js');
+require('../web/js/store.js');
+const C = global.CatchIt;
+const input = (at, overrides = {}) => ({...C.store.input, baseTime: C.util.parse(at), busMode: 'manual', busWait: 0, ...overrides});
+const calc = (params, flags = {}) => C.RouteEngine.calculateRoutePlan(params, C.RoutePortAdapter.snapshot(C.ConfigFallback, flags));
+let calm = calc(input('19:35', {deltaS6:-300}));
+assert.equal(calm.activePlan.targetTrain.slackSec, 720);
+assert(calm.activePlan.nodes.find(n => n.segmentCode === 'S6').hint.text.includes('кофе')); 
+assert.equal(calm.verdict.code, 'CALM');
+assert.equal(calm.activePlan.comboCode, 'CC');
+let hurry = calc(input('19:42'));
+assert.equal(hurry.verdict.code, 'HURRY');
+assert.equal(hurry.activePlan.comboCode, 'CF');
+assert.equal(hurry.activePlan.targetTrain.depTime, '20:10');
+assert.equal(hurry.verdict.savingsMin, 20);
+let option = calc(input('19:44'));
+assert.equal(option.verdict.code, 'FREE_OPTION');
+assert.equal(option.activePlan.targetTrain.slackSec, 30);
+assert.equal(option.verdict.probabilityPct, 50);
+assert.equal(option.combinationsMatrix.length, 4);
+let forced = calc(input('19:42', {forceCalmToday:true}));
+assert.equal(forced.activePlan.comboCode, 'CC');
+assert.equal(forced.activePlan.targetTrain.depTime, '20:30');
+let cancelled = calc(input('19:42'), {targetTrainCancelled:true});
+assert.notEqual(cancelled.activePlan.targetTrain.depTime, '20:10');
+assert(cancelled.upcomingTrains.some(t => t.depTime === '20:10' && t.status === 'cancelled'));
+assert(hurry.upcomingTrains.some(t => t.status === 'filtered_out'));
+for (const flag of ['apiTimeout','schemaErrorRecovered','staleCache','mckHeadwayFallback']) {
+  let d = calc(input('19:42'), {[flag]:true});
+  assert(d.meta.degradationFlags[flag]);
+  assert(d.meta.warnings.length);
+}
+let rev = calc(input('19:42', {direction:'from_home',arriveBy:C.util.parse('09:00')}));
+assert.equal(rev.meta.direction, 'from_home');
+assert.equal(rev.activePlan.nodes.length, 10);
+assert.equal(rev.activePlan.arrivalHomeTime, '09:00');
+assert(rev.activePlan.departureTime !== '—');
+let changed = calc(input('19:42', {deltaS6:300}));
+assert.notEqual(changed.activePlan.nodes.find(n => n.segmentCode === 'S6').durationSec, hurry.activePlan.nodes.find(n => n.segmentCode === 'S6').durationSec);
+let night = calc(input('23:50'));
+assert.notEqual(night.activePlan.targetTrain.depTime, '—');
+for (const data of [calm,hurry,option,forced,cancelled,rev,night]) {
+  assert(data.meta && data.verdict && data.activePlan && data.comparisonCalmPlan && data.combinationsMatrix && data.upcomingTrains);
+  assert(data.activePlan.nodes.every(n => n.nodeCode && n.segmentCode));
+}
+console.log('Engine scenarios passed.');
